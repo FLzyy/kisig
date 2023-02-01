@@ -1,7 +1,7 @@
 {
-  "name": "npm-package",
+  "name": "kisig",
   "version": "1.0.0",
-  "description": "npm-package description",
+  "description": "Lightweight terminal spinners.",
   "main": "index.js",
   "scripts": {
     "compile": "swc src/index.ts -d dist --config-file .swcrc",
@@ -16,21 +16,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FLzyy/npm-package.git"
+    "url": "git+https://github.com/FLzyy/kisig.git"
   },
   "keywords": [
-    "key",
-    "w",
-    "o",
-    "r",
-    "d"
+    "terminal",
+    "cli",
+    "loading",
+    "ascii",
+    "progress"
   ],
   "author": "FLzyy",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FLzyy/npm-package/issues"
+    "url": "https://github.com/FLzyy/kisig/issues"
   },
-  "homepage": "https://github.com/FLzyy/npm-package#readme",
+  "homepage": "https://github.com/FLzyy/kisig#readme",
   "devDependencies": {
     "@swc/cli": "^0.1.59",
     "@swc/core": "^1.3.27",
