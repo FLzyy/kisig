@@ -33,5 +33,3 @@ spinner.config = {
   x: "🔴",
 };
 ```
-
-_[Read the rest of the documentation on github](https://github.com/FLzyy/kisig)_
