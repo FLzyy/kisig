@@ -20,7 +20,7 @@ export const dots: CliSpinner = {
   frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
 };
 
-export class Spinner {
+export default class Spinner {
   text: string;
   color: string;
   check: string;
