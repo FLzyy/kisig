@@ -1,4 +1,4 @@
-import { Spinner } from "./index";
+import Spinner from "./index";
 
 const spinner = new Spinner("Hello World!");
 
