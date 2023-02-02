@@ -4,6 +4,7 @@
   "description": "Lightweight terminal spinners.",
   "main": "index.js",
   "type": "module",
+  "types": "index.d.ts",
   "scripts": {
     "compile": "swc src/index.ts -d dist --config-file .swcrc",
     "clean": "rm -rf dist",
