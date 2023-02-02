@@ -10,7 +10,9 @@
     },
     "minify": {
       "compress": true,
-      "mangle": true
+      "mangle": {
+        "keepClassNames": true
+      }
     },
     "target": "es2021",
     "loose": true,

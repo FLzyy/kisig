@@ -5,7 +5,7 @@
 ## Usage
 
 ```js
-import { Spinner } from "kisig";
+import Spinner from "kisig";
 
 const spinner = new Spinner("Loading Content");
 
@@ -16,8 +16,6 @@ try {
 } catch (err) {
   spinner.error(`Something went wrong: ${err}`);
 }
-
-spinner.reset();
 
 spinner.text = "Loading new Stuff";
 spinner.color = "32"; // Ansi color code
