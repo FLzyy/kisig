@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Lightweight terminal spinners.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "compile": "swc src/index.ts -d dist --config-file .swcrc",
     "clean": "rmdir /Q /S dist",
