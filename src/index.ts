@@ -61,7 +61,11 @@ export default class Spinner {
     return this;
   }
 
-  finish(icon: "check" | "x", text?: string, config?: SpinnerConfig): this {
+  private finish(
+    icon: "check" | "x",
+    text?: string,
+    config?: SpinnerConfig
+  ): this {
     if (!this.interval) throw new Error("not started");
     if (text) this.text = text;
     if (config) this.handleConfig(config);
