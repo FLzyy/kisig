@@ -61,22 +61,26 @@ export class Spinner {
     return this;
   }
 
-  finish(icon: string): this {
+  finish(icon: "check" | "x", text?: string, config?: SpinnerConfig): this {
     if (!this.interval) throw new Error("not started");
+    if (text) this.text = text;
+    if (config) this.handleConfig(config);
 
     this.i = 0;
     clearInterval(this.interval);
-    this.stream.write(`\r${icon}`);
+    this.stream.write(
+      `\r${this[icon]}${text?.padStart(text.length + 1, " ") ?? ""}`
+    );
     return this;
   }
 
-  success(): this {
-    this.finish(this.check);
+  success(text?: string, config?: SpinnerConfig): this {
+    this.finish("check", text, config);
     return this;
   }
 
-  error(): this {
-    this.finish(this.x);
+  error(text?: string, config?: SpinnerConfig): this {
+    this.finish("x", text, config);
     return this;
   }
 
