@@ -1,5 +1,9 @@
 # kisig
 
+[![npm version](https://img.shields.io/npm/v/kisig)](https://www.npmjs.com/package/kisig)
+[![npm downloads](https://img.shields.io/npm/dw/kisig.svg)](https://www.npmjs.com/package/kisig)
+[![CodeFactor](https://www.codefactor.io/repository/github/flzyy/kisig/badge)](https://www.codefactor.io/repository/github/flzyy/kisig)
+
 > Lightweight terminal spinners.
 
 ## Usage
