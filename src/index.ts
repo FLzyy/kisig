@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/prefer-readonly */
 
-interface SpinnerConfig {
+export interface SpinnerConfig {
   text?: string;
   color?: string;
   check?: string;
@@ -10,7 +10,7 @@ interface SpinnerConfig {
   stream?: NodeJS.WriteStream;
 }
 
-interface CliSpinner {
+export interface CliSpinner {
   interval?: number;
   frames: string[];
 }
