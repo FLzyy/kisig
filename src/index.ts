@@ -7,10 +7,11 @@ interface SpinnerConfig {
   check?: string;
   x?: string;
   cliSpinner?: CliSpinner;
+  stream?: NodeJS.WriteStream;
 }
 
 interface CliSpinner {
-  interval: number;
+  interval?: number;
   frames: string[];
 }
 
@@ -25,6 +26,7 @@ export class Spinner {
   check: string;
   x: string;
   cliSpinner: CliSpinner;
+  stream: NodeJS.WriteStream;
 
   private interval: NodeJS.Timer;
   private i = 0;
@@ -34,6 +36,7 @@ export class Spinner {
     this.check = "\x1b[32m✔\x1b[0m";
     this.x = "\x1b[31m✘\x1b[0m";
     this.cliSpinner = dots;
+    this.stream = process.stdout;
 
     if (config) this.handleConfig(config);
     if (text) {
@@ -47,13 +50,13 @@ export class Spinner {
     if (!this.cliSpinner) throw new Error("no cliSpinner");
 
     this.interval = setInterval(() => {
-      process.stdout.write(
+      this.stream.write(
         `\r\x1b[${this.color}m${this.cliSpinner.frames[this.i++]}\x1b[0m ${
           this.text
         }`
       );
       this.i %= this.cliSpinner.frames.length;
-    }, this.cliSpinner.interval);
+    }, this.cliSpinner.interval ?? 80);
 
     return this;
   }
@@ -63,7 +66,7 @@ export class Spinner {
 
     this.i = 0;
     clearInterval(this.interval);
-    console.log(`\r${icon}`);
+    this.stream.write(`\r${icon}`);
     return this;
   }
 
@@ -96,6 +99,7 @@ export class Spinner {
       check: this.check,
       x: this.x,
       cliSpinner: this.cliSpinner,
+      stream: this.stream,
     };
   }
 }
