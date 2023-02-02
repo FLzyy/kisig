@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "compile": "swc src/index.ts -d dist --config-file .swcrc",
-    "clean": "rmdir /Q /S dist",
+    "clean": "rm -rf dist",
     "build": "npm run compile && tsx scripts/build.ts",
     "dev": "tsx src/dev.ts",
     "pub": "npm run build && cd dist && npm publish",
