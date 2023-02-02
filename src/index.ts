@@ -28,7 +28,7 @@ export default class Spinner {
   cliSpinner: CliSpinner;
   stream: NodeJS.WriteStream;
 
-  private interval: NodeJS.Timer | null;
+  private t: NodeJS.Timer | null;
   private i = 0;
 
   constructor(text?: string, config?: SpinnerConfig) {
@@ -38,7 +38,7 @@ export default class Spinner {
     this.cliSpinner = dots;
     this.stream = process.stdout;
 
-    if (config) this.handleConfig(config);
+    if (config) this.h(config);
     if (text) {
       this.text = text;
       this.start();
@@ -49,7 +49,7 @@ export default class Spinner {
     if (!this.text) throw new Error("no text");
     if (!this.cliSpinner) throw new Error("no cliSpinner");
 
-    this.interval = setInterval(() => {
+    this.t = setInterval(() => {
       this.stream.write(
         `\r\x1b[${this.color}m${this.cliSpinner.frames[this.i++]}\x1b[0m ${
           this.text
@@ -61,18 +61,14 @@ export default class Spinner {
     return this;
   }
 
-  private finish(
-    icon: "check" | "x",
-    text?: string,
-    config?: SpinnerConfig
-  ): this {
-    if (!this.interval) throw new Error("not started");
+  private f(icon: "check" | "x", text?: string, config?: SpinnerConfig): this {
+    if (!this.t) throw new Error("not started");
     if (text) this.text = text;
-    if (config) this.handleConfig(config);
+    if (config) this.h(config);
 
     this.i = 0;
-    clearInterval(this.interval);
-    this.interval = null;
+    clearInterval(this.t);
+    this.t = null;
     this.stream.write(
       `\r${this[icon]}${text?.padStart(text.length + 1, " ") ?? ""}`
     );
@@ -80,16 +76,16 @@ export default class Spinner {
   }
 
   success(text?: string, config?: SpinnerConfig): this {
-    this.finish("check", text, config);
+    this.f("check", text, config);
     return this;
   }
 
   error(text?: string, config?: SpinnerConfig): this {
-    this.finish("x", text, config);
+    this.f("x", text, config);
     return this;
   }
 
-  private handleConfig(config: SpinnerConfig): this {
+  private h(config: SpinnerConfig): this {
     for (const [key, value] of Object.entries(config)) {
       this[key] = value;
     }
@@ -98,11 +94,11 @@ export default class Spinner {
   }
 
   get isSpinning(): Boolean {
-    return !!this.interval;
+    return !!this.t;
   }
 
   set config(cfg: SpinnerConfig) {
-    this.handleConfig(cfg);
+    this.h(cfg);
   }
 
   get config(): SpinnerConfig {
