@@ -28,7 +28,7 @@ export class Spinner {
   cliSpinner: CliSpinner;
   stream: NodeJS.WriteStream;
 
-  private interval: NodeJS.Timer;
+  private interval: NodeJS.Timer | null;
   private i = 0;
 
   constructor(text?: string, config?: SpinnerConfig) {
@@ -68,6 +68,7 @@ export class Spinner {
 
     this.i = 0;
     clearInterval(this.interval);
+    this.interval = null;
     this.stream.write(
       `\r${this[icon]}${text?.padStart(text.length + 1, " ") ?? ""}`
     );
@@ -90,6 +91,10 @@ export class Spinner {
     }
 
     return this;
+  }
+
+  get isSpinning(): Boolean {
+    return !!this.interval;
   }
 
   set config(cfg: SpinnerConfig) {
