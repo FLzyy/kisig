@@ -15,6 +15,7 @@ export interface CliSpinner {
   frames: string[];
 }
 
+// https://github.com/sindresorhus/cli-spinners/blob/HEAD/spinners.json
 export const dots: CliSpinner = {
   interval: 80,
   frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
@@ -30,6 +31,7 @@ export default class Spinner {
 
   private t: NodeJS.Timer | null;
   private i = 0;
+  private l = 0;
 
   constructor(text?: string, config?: SpinnerConfig) {
     this.color = "33";
@@ -45,13 +47,33 @@ export default class Spinner {
     }
   }
 
+  private c(): this {
+    if (!this.stream.isTTY) return this;
+
+    this.stream.cursorTo(0);
+
+    for (let i = 0; i < this.l; i++) {
+      if (i > 0) {
+        this.stream.moveCursor(0, -1);
+      }
+
+      this.stream.clearLine(1);
+    }
+
+    this.l = 0;
+
+    return this;
+  }
+
   start(): this {
     if (!this.text) throw new Error("no text");
     if (!this.cliSpinner) throw new Error("no cliSpinner");
+    if (!this.stream.isTTY) return this;
 
     this.t = setInterval(() => {
-      this.stream.write(
-        `\r\x1b[${this.color}m${this.cliSpinner.frames[this.i++]}\x1b[0m ${
+      this.l = this.text.length;
+      this.c().stream.write(
+        `\x1b[${this.color}m${this.cliSpinner.frames[this.i++]}\x1b[0m ${
           this.text
         }`
       );
@@ -69,8 +91,9 @@ export default class Spinner {
     this.i = 0;
     clearInterval(this.t);
     this.t = null;
-    this.stream.write(
-      `\r${this[icon]}${text?.padStart(text.length + 1, " ") ?? ""}`
+    this.l = this.text.length;
+    this.c().stream.write(
+      `${this[icon]}${text?.padStart(text.length + 1, " ") ?? ""}`
     );
     return this;
   }
