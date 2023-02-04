@@ -4,7 +4,7 @@
     "moduleResolution": "NodeNext",
     "strictNullChecks": true,
     "target": "ES2021",
-    "outDir": "dist",
+    "outDir": "src/types",
     "declaration": true,
     "emitDeclarationOnly": true
   },
